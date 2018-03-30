@@ -1,15 +1,32 @@
-## Put comments here that give an overall description of what your
-## functions do
+# This set of function were directly inspired from the example used to cache the mean
+# The logic remained the same
+# The only difference is that instead of calculating and caching the mean of a vector, we are calculating and caching the inverse of aq matrix
 
-## Write a short comment describing this function
-
+# Function containing four functions (set a matrix, get its value, sets and gets its inverse) )
 makeCacheMatrix <- function(x = matrix()) {
-
+  i <- NULL
+  set <- function(y) {
+    x <<- y
+    i <<- NULL
+  }
+  get <- function() x
+  setinverse <- function(inverse) i <<- inverse
+  getinverse <- function() i
+  list(set = set,
+       get = get,
+       setinverse = setinverse,
+       getinverse = getinverse)
 }
 
-
-## Write a short comment describing this function
-
+# Function to calculate the inverse of the matrix
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  i <- x$getinverse()
+  if (!is.null(i)) {
+    message("getting cached data")
+    return(i)
+  }
+  mat <- x$get()
+  i <- solve(mat, ...)
+  x$setinverse(i)
+  i
 }
